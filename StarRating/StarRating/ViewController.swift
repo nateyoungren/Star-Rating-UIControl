@@ -12,13 +12,21 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
- 
+        updateNavTitle(number: 1)
     }
     
     @IBAction func updateRating(_ sender: StarRating) {
-        
+        let value = sender.value
+        updateNavTitle(number: value)
     }
     
+    func updateNavTitle(number: Int) {
+        if number != 1 {
+            navigationItem.title = "User Rating: \(number) stars"
+        } else {
+            navigationItem.title = "User Rating: \(number) star"
+        }
+    }
 
 }
 
