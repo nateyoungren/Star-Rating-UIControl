@@ -47,6 +47,8 @@ class StarRating: UIControl {
             self.addSubview(label)
             labels.append(label)
         }
+        
+        self.backgroundColor = .clear
     }
     
     override var intrinsicContentSize: CGSize {

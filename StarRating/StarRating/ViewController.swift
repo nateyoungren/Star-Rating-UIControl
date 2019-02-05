@@ -12,20 +12,29 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateNavTitle(number: 1)
+        updateViews(number: 1)
     }
     
     @IBAction func updateRating(_ sender: StarRating) {
         let value = sender.value
-        updateNavTitle(number: value)
+        updateViews(number: value)
     }
     
-    func updateNavTitle(number: Int) {
-        if number != 1 {
-            navigationItem.title = "User Rating: \(number) Stars"
-        } else {
+    func updateViews(number: Int) {
+        switch number {
+        case 1:
             navigationItem.title = "User Rating: \(number) Star"
+            view.backgroundColor = .white
+        case 5:
+            navigationItem.title = "User Rating: \(number) Stars"
+            view.backgroundColor = .yellow
+        default:
+            navigationItem.title = "User Rating: \(number) Stars"
+            view.backgroundColor = .white
         }
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
     }
 
 }
