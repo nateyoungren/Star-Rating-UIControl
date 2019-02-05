@@ -11,11 +11,16 @@ import UIKit
 extension UIView {
     // "Flare view" animation sequence
     func performFlare() {
-        func flare()   { transform = CGAffineTransform(scaleX: 1.6, y: 1.6) }
-        func unflare() { transform = .identity }
-        
-        UIView.animate(withDuration: 0.3,
-                       animations: { flare() },
-                       completion: { _ in UIView.animate(withDuration: 0.1) { unflare() }})
+
+        UIView.animate(withDuration: 0.3, animations: {
+            var t = CGAffineTransform.identity
+            t = t.rotated(by: CGFloat.pi)
+            t = t.scaledBy(x: 1.6, y: 1.6)
+            self.transform = t
+        }) { (_) in
+            UIView.animate(withDuration: 0.1, animations: {
+                self.transform = .identity
+            })
+        }
     }
 }
