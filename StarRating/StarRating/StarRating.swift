@@ -32,8 +32,7 @@ class StarRating: UIControl {
             
             let componentsWidth = Int(CGFloat(n - 1) * componentDimension)
             let xPosition = CGFloat(componentsWidth + (8 * n))
-            
-            print(xPosition)
+
             label.frame = CGRect(x: xPosition, y: 0, width: componentDimension, height: componentDimension)
             label.font = UIFont.boldSystemFont(ofSize: 32)
             label.text = "✶"
@@ -92,7 +91,22 @@ class StarRating: UIControl {
     
     func updateValue(touch: UITouch) {
         let touchPoint = touch.location(in: self)
-        value = Int(touchPoint.x)
+        
+        let oldValue = self.value
+        
+        for label in labels {
+            
+            if label.tag <= oldValue {
+                label.textColor = componentActiveColor
+            } else {
+                label.textColor = componentInactiveColor
+            }
+            
+            if label.frame.contains(touchPoint) {
+                self.value = label.tag
+                sendActions(for: .valueChanged)
+            }
+        }
     }
 
 }
