@@ -22,9 +22,9 @@ class ViewController: UIViewController {
     
     func updateNavTitle(number: Int) {
         if number != 1 {
-            navigationItem.title = "User Rating: \(number) stars"
+            navigationItem.title = "User Rating: \(number) Stars"
         } else {
-            navigationItem.title = "User Rating: \(number) star"
+            navigationItem.title = "User Rating: \(number) Star"
         }
     }
 

@@ -44,7 +44,6 @@ class StarRating: UIControl {
             } else {
                 label.textColor = componentInactiveColor
             }
-            
             self.addSubview(label)
             labels.append(label)
         }
@@ -55,6 +54,45 @@ class StarRating: UIControl {
         let componentsSpacing = CGFloat(componentCount + 1) * 8.0
         let width = componentsWidth + componentsSpacing
         return CGSize(width: width, height: componentDimension)
+    }
+    
+    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        updateValue(touch: touch)
+        sendActions(for: [.valueChanged, .touchDown])
+        return true
+    }
+    
+    override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let touchPoint = touch.location(in: self)
+        if bounds.contains(touchPoint) {
+            updateValue(touch: touch)
+            sendActions(for: [.valueChanged, .touchDragInside])
+        } else {
+            sendActions(for: .touchDragOutside)
+        }
+        return true
+    }
+    
+    override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+        defer { super.endTracking(touch, with: event) }
+        
+        guard let touch = touch else { return }
+        let touchPoint = touch.location(in: self)
+        if bounds.contains(touchPoint) {
+            updateValue(touch: touch)
+            sendActions(for: [.valueChanged, .touchUpInside])
+        } else {
+            sendActions(for: .touchUpOutside)
+        }
+    }
+    
+    override func cancelTracking(with event: UIEvent?) {
+        sendActions(for: .touchCancel)
+    }
+    
+    func updateValue(touch: UITouch) {
+        let touchPoint = touch.location(in: self)
+        value = Int(touchPoint.x)
     }
 
 }
