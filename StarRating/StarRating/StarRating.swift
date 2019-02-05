@@ -12,6 +12,7 @@ class StarRating: UIControl {
 
     var value: Int = 1
     var labels: [UILabel] = []
+    var oldValue: Int = 1
     
     let componentDimension: CGFloat = 40
     let componentCount = 5
@@ -92,11 +93,11 @@ class StarRating: UIControl {
     func updateValue(touch: UITouch) {
         let touchPoint = touch.location(in: self)
         
-        let oldValue = self.value
+        self.oldValue = self.value
         
         for label in labels {
             
-            if label.tag <= oldValue {
+            if label.tag <= self.oldValue {
                 label.textColor = componentActiveColor
             } else {
                 label.textColor = componentInactiveColor
@@ -104,9 +105,9 @@ class StarRating: UIControl {
             
             if label.frame.contains(touchPoint) {
                 self.value = label.tag
+                label.performFlare()
                 sendActions(for: .valueChanged)
             }
         }
     }
-
 }
